@@ -3,7 +3,9 @@ var router = express.Router();
 var op = require('../oracleDBOps');
 var async = require('async');
 var oracledb = require('oracledb');
-
+var fs = require('fs');
+var filepath = 'log/GeoFenceLog.txt';
+var fileContent = ' ';
 
 router.get('/geoFence', function (req, res) {
     geoFence(req, res);
@@ -15,19 +17,15 @@ router.post('/geoFence', function (req, res) {
 
 module.exports = router;
 
-
-
 function geoFence(req, res) {
 
     let errArray = [];
     let doneArray = [];
     let sqlStatement;
     let bindArr = [];
-    let deviceId = req.query.deviceID;
-
+    let deviceId = req.query.deviceID;    
     let gpsTime = req.query.lastGpsTimeInS;
     let notification = req.query.notification;
-
     let ts = parseInt(req.query.lastGpsTimeInS) * 1000;
 
     if (notification === 'Bosch_Exit_Notification')
@@ -43,15 +41,21 @@ function geoFence(req, res) {
         comments = comments || `,battery:${batterLevel}`;
     }
 
-
     let locId = 'NOMAP';
-
+    
+    
+    
     var doConnect = function (cb) {
         op.doConnectCB(function (err, conn) {
             cb(null, conn);
         });
     };
-
+    console.log(req.query);
+    let fileContent = JSON.stringify(req.query);//JSON.stringify(req);
+     fs.appendFile(filepath, fileContent, (err) => {    
+        if (err) throw err;
+    console.log("The file was succesfully saved!");
+    });
     var getGeoMap = function (conn, cb) {
         let getGeoSQL = `SELECT * FROM GEOFENCE_T WHERE GEOFENCE_ID = '${location}' AND TYPE ='LOC_ID'`;
         console.log(getGeoSQL);

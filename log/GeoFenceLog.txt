@@ -1,0 +1,1 @@
+{"deviceId":"BOSCH005","notification":"TEST123","lastGpsTimeInS":"1000","location":"W720"}{"deviceId":"BOSCH005","notification":"TEST123","lastGpsTimeInS":"1000","location":"W720"}{"deviceId":"BOSCH005","notification":"TEST1234","lastGpsTimeInS":"1000","location":"W720"}
