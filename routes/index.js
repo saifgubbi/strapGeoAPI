@@ -8,7 +8,7 @@ var express = require('express');
 var router = express.Router();
 
 router.use('/geoNotificaton', require('./geoNotification'));
-
+router.use('/gps', require('./gps'));
 
 router.get('/', function (req, res) {
     res.send('Welcome to  STRAP GEO Apis!');
